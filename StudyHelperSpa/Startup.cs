@@ -11,6 +11,13 @@ using StudyHelperSpa.Models;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using GraphQL;
+using GraphiQl;
+using StudyHelperSpa.Services;
+using StudyHelperSpa.Repositories;
+using StudyHelperSpa.Schema;
+using StudyHelperSpa.GraphTypes;
+using GraphQL.Types;
 
 namespace StudyHelperSpa
 {
@@ -26,6 +33,14 @@ namespace StudyHelperSpa
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            
+            services.AddScoped<IQuestionsAndAnsweresService, QuestionsAndAnswersService>();
+            services.AddScoped<QuestionsAndAnswersRepository>();
+            services.AddScoped<QuestionQuery>();
+            services.AddScoped<QuestionType>();
+            services.AddScoped<AnswerType>();
+            services.AddScoped<ISchema, GraphQLQuestionSchema>();
+
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlite(
                     Configuration.GetConnectionString("DefaultConnection")));
@@ -65,7 +80,7 @@ namespace StudyHelperSpa
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-
+            app.UseGraphiQl("/Graph");
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseSpaStaticFiles();

@@ -18,6 +18,8 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="5.0.8" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="5.0.8" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.8" />
+    <PackageReference Include="GraphQL" Version="4.6.0" />
+    <PackageReference Include="graphiql" Version="2.0.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -28,8 +30,24 @@
     <Content Remove="$(SpaRoot)**" />
     <None Remove="$(SpaRoot)**" />
     <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
+    <None Remove="GraphQL" />
+    <None Remove="graphiql" />
+    <None Remove="GraphTypes\" />
+    <None Remove="Schema\" />
+    <None Remove="Repositories\" />
+    <None Remove="Services\" />
+    <None Remove="DTOs\" />
+    <None Remove="Controllers\V1\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="GraphTypes\" />
+    <Folder Include="Schema\" />
+    <Folder Include="Repositories\" />
+    <Folder Include="Services\" />
+    <Folder Include="DTOs\" />
+    <Folder Include="Controllers\V1\" />
+  </ItemGroup>
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
     <!-- Ensure Node.js is installed -->
     <Exec Command="node --version" ContinueOnError="true">
@@ -48,7 +66,7 @@
     <!-- Include the newly-built files in the publish output -->
     <ItemGroup>
       <DistFiles Include="$(SpaRoot)build\**" />
-      <ResolvedFileToPublish Include="@(DistFiles->'%(FullPath)')" Exclude="@(ResolvedFileToPublish)">
+      <ResolvedFileToPublish Include="@(DistFiles-&gt;'%(FullPath)')" Exclude="@(ResolvedFileToPublish)">
         <RelativePath>%(DistFiles.Identity)</RelativePath>
         <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
         <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
