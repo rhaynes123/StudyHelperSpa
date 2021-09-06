@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using StudyHelperSpa.Schema;
 using StudyHelperSpa.Services;
@@ -10,6 +11,9 @@ using StudyHelperSpa.Services;
 
 namespace StudyHelperSpa.Controllers.V1
 {
+    [Authorize]
+    //[ApiController]
+    //[Route("[controller]")]
     public class QuestionsController : Controller
     {
         private readonly IQuestionsAndAnsweresService _questionsAndAnsweresService;
