@@ -2,33 +2,20 @@
 using System.Collections.Generic;
 using System.Linq;
 using StudyHelperSpa.Models;
+using StudyHelperSpa.Data;
 namespace StudyHelperSpa.Repositories
 {
     public class QuestionsAndAnswersRepository
     {
-        public QuestionsAndAnswersRepository()
+        private readonly ApplicationDbContext dbContext;
+        public QuestionsAndAnswersRepository(ApplicationDbContext context)
         {
-          
+            dbContext = context;
         }
 
         public List<Question> GetQuestions()
         {
-            return GetSeedQuestions().ToList();
-        }
-
-        private static IList<Question> GetSeedQuestions()
-        {
-            List<Question> questions = new()
-            {
-                new Question
-                {
-                    Id = 1,
-                    Text = "The Cost Management Center can create Budget Alerts? (Yes/No)",
-                    CorrectAnswer = "Yes"
-                }
-            };
-
-            return questions;
+            return dbContext.Questions.ToList();
         }
     }
 }

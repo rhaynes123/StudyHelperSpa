@@ -52,13 +52,24 @@ export class FetchData extends Component {
   }
 
   async populateQuestionata() {
-    const token = await authService.getAccessToken();
+      const token = await authService.getAccessToken();
+      const query = `
+        query{
+          questions{
+            id,
+            text,
+            correctAnswer
+          }
+        }
+`;
       const response = await fetch('graphql', {
           headers: !token ? {} : { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
         method: 'POST',
-        body: JSON.stringify({ query: ''})
-    });
-    const data = await response.json();
-    this.setState({ questions: data, loading: false });
+          body: JSON.stringify({ query })
+      });
+     
+      const responseData = await response.json();
+      console.log(responseData);
+      this.setState({ questions: responseData.data.questions, loading: false });
   }
 }

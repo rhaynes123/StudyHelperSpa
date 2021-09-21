@@ -23,7 +23,7 @@ namespace StudyHelperSpa.Controllers.V1
             _questionsAndAnsweresService = questionsAndAnsweresService;
         }
         // GET: /<controller>/
-        [HttpPost("graphql")]
+        //[HttpPost("graphql")]
         public IActionResult Post()
         {
             return Ok(_questionsAndAnsweresService.GetAllQuestions());

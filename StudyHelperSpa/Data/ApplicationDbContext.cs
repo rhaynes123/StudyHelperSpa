@@ -17,5 +17,23 @@ namespace StudyHelperSpa.Data
             IOptions<OperationalStoreOptions> operationalStoreOptions) : base(options, operationalStoreOptions)
         {
         }
+
+        public DbSet<Question> Questions { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+
+            builder.Entity<Question>(entity =>
+            {
+                entity.HasKey(q => q.Id);
+                entity.Property(q => q.Id);
+                entity.Property(q => q.Text);
+                entity.Property(q => q.CorrectAnswer);
+                entity.Property(q => q.Category);
+                entity.Property(q => q.Exam);
+            });
+
+        }
     }
 }

@@ -20,6 +20,13 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.8" />
     <PackageReference Include="GraphQL" Version="4.6.0" />
     <PackageReference Include="graphiql" Version="2.0.0" />
+    <PackageReference Include="GraphQL.Server.Ui.Playground" Version="5.0.2" />
+    <PackageReference Include="GraphQL.Server.Transports.AspNetCore" Version="5.0.2" />
+    <PackageReference Include="GraphQL.Client.Serializer.Newtonsoft" Version="3.2.4" />
+    <PackageReference Include="GraphQL.Server.Transports.WebSockets" Version="4.4.1" />
+    <PackageReference Include="GraphQL.Server.Transports.AspNetCore.SystemTextJson" Version="5.0.2" />
+    <PackageReference Include="HotChocolate.AspNetCore" Version="11.3.7" />
+    <PackageReference Include="HotChocolate" Version="11.3.7" />
   </ItemGroup>
 
   <ItemGroup>
@@ -38,6 +45,13 @@
     <None Remove="Services\" />
     <None Remove="DTOs\" />
     <None Remove="Controllers\V1\" />
+    <None Remove="GraphQL.Server.Ui.Playground" />
+    <None Remove="GraphQL.Server.Transports.AspNetCore" />
+    <None Remove="GraphQL.Client.Serializer.Newtonsoft" />
+    <None Remove="GraphQL.Server.Transports.WebSockets" />
+    <None Remove="GraphQL.Server.Transports.AspNetCore.SystemTextJson" />
+    <None Remove="HotChocolate.AspNetCore" />
+    <None Remove="HotChocolate" />
   </ItemGroup>
 
   <ItemGroup>

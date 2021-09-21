@@ -18,6 +18,7 @@ using StudyHelperSpa.Repositories;
 using StudyHelperSpa.Schema;
 using StudyHelperSpa.GraphTypes;
 using GraphQL.Types;
+using HotChocolate;
 
 namespace StudyHelperSpa
 {
@@ -33,13 +34,16 @@ namespace StudyHelperSpa
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            
+            services.AddScoped<IDocumentExecuter, DocumentExecuter>();
+            //services.AddScoped<IDocumentWriter, DocumentWriter>();
             services.AddScoped<IQuestionsAndAnsweresService, QuestionsAndAnswersService>();
             services.AddScoped<QuestionsAndAnswersRepository>();
             services.AddScoped<QuestionQuery>();
             services.AddScoped<QuestionType>();
             services.AddScoped<AnswerType>();
-            services.AddScoped<ISchema, GraphQLQuestionSchema>();
+           // services.AddScoped<ISchema, GraphQLQuestionSchema>();
+            //services.AddGraphQL();
+            services.AddGraphQLServer().AddQueryType<QuestionQuery>();
 
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlite(
@@ -67,8 +71,9 @@ namespace StudyHelperSpa
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ApplicationDbContext db)
         {
+            db.Database.Migrate();
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -80,7 +85,9 @@ namespace StudyHelperSpa
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-            app.UseGraphiQl("/Graph");
+           // app.UseGraphiQl("/Graph");
+            //app.UseGraphQL<GraphQLQuestionSchema>("/graphql");
+            //app.UseGraphQLWebSockets<GraphQLQuestionSchema>("/graphql");
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
@@ -92,6 +99,7 @@ namespace StudyHelperSpa
             app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapGraphQL();
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller}/{action=Index}/{id?}");
