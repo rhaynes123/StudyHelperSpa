@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import authService from './api-authorization/AuthorizeService'
-
+import authService from './api-authorization/AuthorizeService';
+import questionService from './Services/QuestionsService';
 export class FetchData extends Component {
   static displayName = FetchData.name;
 
@@ -53,23 +53,9 @@ export class FetchData extends Component {
 
   async populateQuestionata() {
       const token = await authService.getAccessToken();
-      const query = `
-        query{
-          questions{
-            id,
-            text,
-            correctAnswer
-          }
-        }
-`;
-      const response = await fetch('graphql', {
-          headers: !token ? {} : { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
-        method: 'POST',
-          body: JSON.stringify({ query })
-      });
-     
-      const responseData = await response.json();
-      console.log(responseData);
+      const responseData = await questionService.getQuestionsWithAuth(token);
+      
       this.setState({ questions: responseData.data.questions, loading: false });
+      console.log('Response data' + this.state.questions);
   }
 }
